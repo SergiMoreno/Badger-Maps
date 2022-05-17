@@ -96,7 +96,8 @@ print()
 # CREATE LIST FOR FULL NAMES AND SORT IT
 namesList = []
 for (n1, n2) in zip(df['First Name'].dropna(), df['Last Name'].dropna()):
-	namesList.append(n1.lower() + ' ' + n2.lower())
+	namesList.append(n1 + ' ' + n2)
+	#namesList.append(n1.lower() + ' ' + n2.lower())
 print('Alphabetically sorted name list')
 print(sorted(namesList))
 #print(quicksort(namesList))
