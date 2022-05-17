@@ -5,7 +5,7 @@ from datetime import datetime
 
 class BadgerException(Exception):
     def __init__(self, message, row):
-        print('Error: ' + message + ' at row ', row)
+        print('Exception: ' + message + ' at row ', row)
 
 def checkRequiredFields(l, i):
 	# Street, Zip, City, Last Check-in Date and Company.
@@ -32,13 +32,15 @@ telPattern = re.compile("[679][0-9]{8}")
 zipPattern = re.compile("[0][1-9][0-9]{3}|[1234][0-9]{4}|[5][012][0-9]{3}")
 df = pd.read_csv('Sample test file - Sheet1.csv')
 
-# LOG EMPTY ROWS EXCEPTION
+# LOG EMPTY ROWS EXCEPTION AND REQUIRED FIELDS
+print('Checking required fields of read csv')
 logf = open("nanRows.log", "w")
 for index in range(0, len(df.columns)):
 	emptyList = list(df.iloc[index].isnull())
 	if all(emptyList):
-		logf.write("Failed to process, empty row : %i\n" % (index+1))
+		logf.write("Failed to process - empty row : %i\n" % (index+1))
 	checkRequiredFields(df.iloc[index], (index+1))
+print()
 
 # DATES PROCESSING
 print('Dates Processing')
@@ -46,9 +48,9 @@ i = 1
 for d in df['Last Check-In Date']:
 	if isinstance(d, str):
 		if not datePattern.match(d):
-			BadgerException('Exception: Wrong date format', i)
+			BadgerException('Wrong date format', i)
 	else:
-		BadgerException('Exception: NaN date', i)
+		BadgerException('NaN date', i)
 	i += 1
 print()
 
@@ -59,9 +61,9 @@ for p in df['Phone']:
 	if isinstance(p, str):
 		p = p.replace(" ","")
 		if not telPattern.match(p):
-			BadgerException('Exception: Wrong phone format', i)
+			BadgerException('Wrong phone format', i)
 	else:
-		BadgerException('Exception: NaN phone number', i)
+		BadgerException('NaN phone number', i)
 	i += 1
 print()
 
@@ -71,9 +73,9 @@ i = 1
 for z in df['Zip']:
 	if isinstance(z, str):
 		if not zipPattern.match(z):
-			BadgerException('Exception: Wrong zip format', i)
+			BadgerException('Wrong zip format', i)
 	else:
-		BadgerException('Exception: NaN zip number', i)
+		BadgerException('NaN zip number', i)
 	i += 1
 print()
 
