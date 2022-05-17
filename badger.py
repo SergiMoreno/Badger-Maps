@@ -1,5 +1,6 @@
 import pandas as pd
 import re
+import logging
 from datetime import datetime
 
 class BadgerException(Exception):
@@ -10,6 +11,17 @@ datePattern = re.compile("([0]?[1-9]|[12][0-9]|[3][01])/([0]?[1-9]|[1][0-2])/([1
 telPattern = re.compile("[679][0-9]{8}")
 zipPattern = re.compile("[0][1-9][0-9]{3}|[1234][0-9]{4}|[5][012][0-9]{3}")
 df = pd.read_csv('Sample test file - Sheet1.csv')
+
+logf = open("nanRows.log", "w")
+for index in range(0, len(df.columns)):
+	emptyList = list(df.iloc[index].isnull())
+	if all(emptyList):
+		logf.write("Failed to process, empty row : %i\n" % (index+1))
+
+# Street, Zip, City, Last Check-in Date and Company.
+# 2 3 4 6 9
+required_fields = ['Street','Zip','City','Last Check-In Date','Company']
+print(required_fields)
 
 print('Dates Processing')
 i = 1
@@ -50,8 +62,8 @@ print()
 date_list = pd.to_datetime(df['Last Check-In Date'], format = '%d/%m/%Y')
 #print(date_list) 
 
-for d in date_list:
-	print(type(d))
+#for d in date_list:
+#	print(type(d))
 
 print(date_list.min())
 print(date_list.max())
