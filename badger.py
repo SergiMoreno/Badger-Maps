@@ -9,7 +9,6 @@ class BadgerException(Exception):
 
 def checkRequiredFields(l, i):
 	# Street, Zip, City, Last Check-in Date and Company.
-	# 2 3 4 6 9
 	required_fields = ['Street','Zip','City','Last Check-In Date','Company']
 	index = 0
 	while index < len(required_fields) and isinstance(l[required_fields[index]], str):
@@ -18,13 +17,6 @@ def checkRequiredFields(l, i):
 	# CHECK IF ROW HAS MINIMUM REQUIRED FIELDS
 	if index < len(required_fields):
 		BadgerException('Not enough required fields', i)
-
-def quicksort(lst):
-    if not lst:
-        return []
-    return (quicksort([x for x in lst[1:] if x <  lst[0]])
-            + [lst[0]] +
-            quicksort([x for x in lst[1:] if x >= lst[0]]))
 
 # RE PATTERNS FOR PROCESSING DATAFRAME
 datePattern = re.compile("([0]?[1-9]|[12][0-9]|[3][01])/([0]?[1-9]|[1][0-2])/([1][9][4-9][0-9]|[2][0][0-5][0-9])")
@@ -99,7 +91,5 @@ print()
 namesList = []
 for (n1, n2) in zip(df['First Name'].dropna(), df['Last Name'].dropna()):
 	namesList.append(n1 + ' ' + n2)
-	#namesList.append(n1.lower() + ' ' + n2.lower())
 print('Alphabetically sorted name list')
 print(sorted(namesList))
-#print(quicksort(namesList))
