@@ -1,5 +1,5 @@
 # Badger-Maps
-Interview Task for internship position at Badger Maps. By [Sergi Moreno](https://github.com/SergiMoreno)
+Interview Task for internship position at Badger Maps. By Sergi Moreno Pérez [@SergiMoreno](https://github.com/SergiMoreno)
 
 ## Comments
 Assumptions:
